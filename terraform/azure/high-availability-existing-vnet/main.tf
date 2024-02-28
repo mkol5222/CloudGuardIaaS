@@ -194,6 +194,7 @@ resource "azurerm_public_ip" "public-ip-lb" {
 }
 
 resource "azurerm_lb" "frontend-lb" {
+  count = var.no_frontend_lb ? 0 : 1
   depends_on = [
     azurerm_public_ip.public-ip-lb]
   name = "frontend-lb"
@@ -208,6 +209,7 @@ resource "azurerm_lb" "frontend-lb" {
 }
 
 resource "azurerm_lb_backend_address_pool" "frontend-lb-pool" {
+  count = var.no_frontend_lb ? 0 : 1
   resource_group_name = module.common.resource_group_name
   loadbalancer_id = azurerm_lb.frontend-lb.id
   name = "frontend-lb-pool"
@@ -232,10 +234,21 @@ resource "azurerm_lb_backend_address_pool" "backend-lb-pool" {
   resource_group_name = module.common.resource_group_name
 }
 
-resource "azurerm_lb_probe" "azure_lb_healprob" {
-  count = 2
+resource "azurerm_lb_probe" "azure_lb_healprob_front" {
+  count = var.no_frontend_lb ? 0 : 1
   resource_group_name = module.common.resource_group_name
-  loadbalancer_id = count.index == 0 ? azurerm_lb.frontend-lb.id : azurerm_lb.backend-lb.id
+  loadbalancer_id = azurerm_lb.frontend-lb.id 
+  name = var.lb_probe_name
+  protocol = var.lb_probe_protocol
+  port = var.lb_probe_port
+  interval_in_seconds = var.lb_probe_interval
+  number_of_probes = var.lb_probe_unhealthy_threshold
+}
+
+resource "azurerm_lb_probe" "azure_lb_healprob_back" {
+
+  resource_group_name = module.common.resource_group_name
+  loadbalancer_id = azurerm_lb.backend-lb.id
   name = var.lb_probe_name
   protocol = var.lb_probe_protocol
   port = var.lb_probe_port
@@ -253,7 +266,7 @@ resource "azurerm_lb_rule" "backend_lb_rules" {
   frontend_ip_configuration_name = "backend-lb"
   load_distribution = "Default"
   backend_address_pool_id = azurerm_lb_backend_address_pool.backend-lb-pool.id
-  probe_id = azurerm_lb_probe.azure_lb_healprob[1].id
+  probe_id = azurerm_lb_probe.azure_lb_healprob_back.id
   enable_floating_ip = var.enable_floating_ip
 }
 
