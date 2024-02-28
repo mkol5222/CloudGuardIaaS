@@ -211,7 +211,7 @@ resource "azurerm_lb" "frontend-lb" {
 resource "azurerm_lb_backend_address_pool" "frontend-lb-pool" {
   count = var.no_frontend_lb ? 0 : 1
   resource_group_name = module.common.resource_group_name
-  loadbalancer_id = azurerm_lb.frontend-lb.id
+  loadbalancer_id = azurerm_lb.frontend-lb[0].id
   name = "frontend-lb-pool"
 }
 
@@ -237,7 +237,7 @@ resource "azurerm_lb_backend_address_pool" "backend-lb-pool" {
 resource "azurerm_lb_probe" "azure_lb_healprob_front" {
   count = var.no_frontend_lb ? 0 : 1
   resource_group_name = module.common.resource_group_name
-  loadbalancer_id = azurerm_lb.frontend-lb.id 
+  loadbalancer_id = azurerm_lb.frontend-lb[0].id 
   name = var.lb_probe_name
   protocol = var.lb_probe_protocol
   port = var.lb_probe_port
