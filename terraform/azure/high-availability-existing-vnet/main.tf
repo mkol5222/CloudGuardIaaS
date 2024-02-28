@@ -218,6 +218,7 @@ resource "azurerm_lb_backend_address_pool" "frontend-lb-pool" {
 }
 
 resource "azurerm_lb" "backend-lb" {
+  count = var.no_backend_lb ? 0 : 1
   name = "backend-lb"
   location = module.common.resource_group_location
   resource_group_name = module.common.resource_group_name
@@ -231,6 +232,7 @@ resource "azurerm_lb" "backend-lb" {
 }
 
 resource "azurerm_lb_backend_address_pool" "backend-lb-pool" {
+  count = var.no_backend_lb ? 0 : 1
   name = "backend-lb-pool"
   loadbalancer_id = azurerm_lb.backend-lb.id
   resource_group_name = module.common.resource_group_name
@@ -248,7 +250,7 @@ resource "azurerm_lb_probe" "azure_lb_healprob_front" {
 }
 
 resource "azurerm_lb_probe" "azure_lb_healprob_back" {
-
+  count = var.no_backend_lb ? 0 : 1
   resource_group_name = module.common.resource_group_name
   loadbalancer_id = azurerm_lb.backend-lb.id
   name = var.lb_probe_name
@@ -259,6 +261,7 @@ resource "azurerm_lb_probe" "azure_lb_healprob_back" {
 }
 
 resource "azurerm_lb_rule" "backend_lb_rules" {
+  count = var.no_backend_lb ? 0 : 1
   resource_group_name = module.common.resource_group_name
   loadbalancer_id = azurerm_lb.backend-lb.id
   name = "backend-lb"
