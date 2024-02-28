@@ -177,9 +177,9 @@ resource "azurerm_network_interface" "nic1" {
 }
 
 resource "azurerm_network_interface_backend_address_pool_association" "nic1_lb_association" {
-  count = var.no_backend_lb ? 0 : 1
+  count = var.no_backend_lb ? 0 : 2
   depends_on = [azurerm_network_interface.nic1, azurerm_lb_backend_address_pool.backend-lb-pool]
-  count = 2
+  // count = 2
   network_interface_id    = azurerm_network_interface.nic1[count.index].id
   ip_configuration_name   = "ipconfig2"
   backend_address_pool_id = azurerm_lb_backend_address_pool.backend-lb-pool[0].id
