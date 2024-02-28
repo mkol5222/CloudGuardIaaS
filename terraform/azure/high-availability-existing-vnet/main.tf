@@ -252,7 +252,7 @@ resource "azurerm_lb_probe" "azure_lb_healprob_front" {
 resource "azurerm_lb_probe" "azure_lb_healprob_back" {
   count = var.no_backend_lb ? 0 : 1
   resource_group_name = module.common.resource_group_name
-  loadbalancer_id = azurerm_lb.backend-lb.id
+  loadbalancer_id = azurerm_lb.backend-lb[0].id
   name = var.lb_probe_name
   protocol = var.lb_probe_protocol
   port = var.lb_probe_port
@@ -263,7 +263,7 @@ resource "azurerm_lb_probe" "azure_lb_healprob_back" {
 resource "azurerm_lb_rule" "backend_lb_rules" {
   count = var.no_backend_lb ? 0 : 1
   resource_group_name = module.common.resource_group_name
-  loadbalancer_id = azurerm_lb.backend-lb.id
+  loadbalancer_id = azurerm_lb.backend-lb[0].id
   name = "backend-lb"
   protocol = "All"
   frontend_port = 0
