@@ -119,7 +119,7 @@ resource "azurerm_network_interface_backend_address_pool_association" "nic_vip_l
   depends_on = [azurerm_network_interface.nic_vip, azurerm_lb_backend_address_pool.frontend-lb-pool]
   network_interface_id    = azurerm_network_interface.nic_vip.id
   ip_configuration_name   = "ipconfig1"
-  backend_address_pool_id = azurerm_lb_backend_address_pool.frontend-lb-pool.id
+  backend_address_pool_id = azurerm_lb_backend_address_pool.frontend-lb-pool[0].id
 }
 
 resource "azurerm_network_interface" "nic" {
@@ -153,7 +153,7 @@ resource "azurerm_network_interface_backend_address_pool_association" "nic_lb_as
   depends_on = [azurerm_network_interface.nic, azurerm_lb_backend_address_pool.frontend-lb-pool]
   network_interface_id    = azurerm_network_interface.nic.id
   ip_configuration_name   = "ipconfig1"
-  backend_address_pool_id = azurerm_lb_backend_address_pool.frontend-lb-pool.id
+  backend_address_pool_id = azurerm_lb_backend_address_pool.frontend-lb-pool[0].id
 }
 
 resource "azurerm_network_interface" "nic1" {
@@ -179,7 +179,7 @@ resource "azurerm_network_interface_backend_address_pool_association" "nic1_lb_a
   count = 2
   network_interface_id    = azurerm_network_interface.nic1[count.index].id
   ip_configuration_name   = "ipconfig2"
-  backend_address_pool_id = azurerm_lb_backend_address_pool.backend-lb-pool.id
+  backend_address_pool_id = azurerm_lb_backend_address_pool.backend-lb-pool[0].id
 }
 
 //********************** Load Balancers **************************//
@@ -265,7 +265,7 @@ resource "azurerm_lb_rule" "backend_lb_rules" {
   backend_port = 0
   frontend_ip_configuration_name = "backend-lb"
   load_distribution = "Default"
-  backend_address_pool_id = azurerm_lb_backend_address_pool.backend-lb-pool.id
+  backend_address_pool_id = azurerm_lb_backend_address_pool.backend-lb-pool[0].id
   probe_id = azurerm_lb_probe.azure_lb_healprob_back.id
   enable_floating_ip = var.enable_floating_ip
 }
