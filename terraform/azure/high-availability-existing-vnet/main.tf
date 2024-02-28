@@ -234,7 +234,7 @@ resource "azurerm_lb" "backend-lb" {
 resource "azurerm_lb_backend_address_pool" "backend-lb-pool" {
   count = var.no_backend_lb ? 0 : 1
   name = "backend-lb-pool"
-  loadbalancer_id = azurerm_lb.backend-lb.id
+  loadbalancer_id = azurerm_lb.backend-lb[0].id
   resource_group_name = module.common.resource_group_name
 }
 
