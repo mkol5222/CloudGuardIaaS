@@ -1,3 +1,15 @@
+// MKo
+variable "no_frontend_lb" {
+  description = "Indicates whether the frontend load balancer deployment will be skipped."
+  type = bool
+  default = false
+}
+variable "no_backend_lb" {
+  description = "Indicates whether the backend load balancer deployment will be skipped."
+  type = bool
+  default = false
+}
+
 //********************** Basic Configuration Variables **************************//
 variable "cluster_name" {
   description = "Cluster name"
