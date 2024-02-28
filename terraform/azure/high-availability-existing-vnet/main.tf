@@ -116,6 +116,7 @@ resource "azurerm_network_interface" "nic_vip" {
 }
 
 resource "azurerm_network_interface_backend_address_pool_association" "nic_vip_lb_association" {
+  count = var.no_frontend_lb ? 0 : 1
   depends_on = [azurerm_network_interface.nic_vip, azurerm_lb_backend_address_pool.frontend-lb-pool]
   network_interface_id    = azurerm_network_interface.nic_vip.id
   ip_configuration_name   = "ipconfig1"
@@ -150,6 +151,7 @@ resource "azurerm_network_interface" "nic" {
 }
 
 resource "azurerm_network_interface_backend_address_pool_association" "nic_lb_association" {
+  count = var.no_frontend_lb ? 0 : 1
   depends_on = [azurerm_network_interface.nic, azurerm_lb_backend_address_pool.frontend-lb-pool]
   network_interface_id    = azurerm_network_interface.nic.id
   ip_configuration_name   = "ipconfig1"
