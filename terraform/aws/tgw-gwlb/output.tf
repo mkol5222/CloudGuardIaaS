@@ -1,10 +1,10 @@
 output "Deployment" {
   value = "Finalizing instances configuration may take up to 20 minutes after deployment is finished."
 }
-output "management_public_ip" {
-  depends_on = [module.gwlb]
-  value = module.gwlb[*].management_public_ip
-}
+# output "management_public_ip" {
+#   depends_on = [module.gwlb]
+#   value = module.gwlb[*].management_public_ip
+# }
 output "gwlb_arn" {
   depends_on = [module.gwlb]
   value = module.gwlb[*].gwlb_arn
