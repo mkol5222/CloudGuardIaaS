@@ -183,13 +183,13 @@ module "cme_iam_role" {
   permissions = var.iam_permissions
 }
 
-module "cme_iam_role_gwlb" {
-  source = "../cme-iam-role-gwlb"
-  providers = {
-    aws = aws
-  }
-  count = local.new_instance_profile_gwlb
+# module "cme_iam_role_gwlb" {
+#   source = "../cme-iam-role-gwlb"
+#   providers = {
+#     aws = aws
+#   }
+#   count = local.new_instance_profile_gwlb
 
-  sts_roles = var.sts_roles
-  permissions = var.iam_permissions
-}
+#   sts_roles = var.sts_roles
+#   permissions = var.iam_permissions
+# }
