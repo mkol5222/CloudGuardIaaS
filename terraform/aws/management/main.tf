@@ -145,7 +145,7 @@ resource "aws_instance" "management-instance" {
   instance_type = var.management_instance_type
   key_name = var.key_name
 
-  iam_instance_profile = local.use_role == 1 ? (local.pre_role == 1 ? aws_iam_instance_profile.management_instance_profile[0].id : join("", (var.is_gwlb_iam == true ? module.cme_iam_role_gwlb.*.cme_iam_profile_name : module.cme_iam_role.*.cme_iam_profile_name))): ""
+  #iam_instance_profile = local.use_role == 1 ? (local.pre_role == 1 ? aws_iam_instance_profile.management_instance_profile[0].id : join("", (var.is_gwlb_iam == true ? module.cme_iam_role_gwlb.*.cme_iam_profile_name : module.cme_iam_role.*.cme_iam_profile_name))): ""
 
   disable_api_termination = var.disable_instance_termination
 
