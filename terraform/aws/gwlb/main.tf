@@ -1,8 +1,8 @@
-provider "aws" {
-   region = var.region
-   access_key = var.access_key
-   secret_key = var.secret_key
-}
+# provider "aws" {
+#    region = var.region
+#    access_key = var.access_key
+#    secret_key = var.secret_key
+# }
 module "gateway_load_balancer" {
   source = "../modules/common/load_balancer"
 
@@ -68,9 +68,9 @@ module "autoscale_gwlb" {
 data "aws_region" "current"{}
 
 module "management" {
-  providers = {
-    aws = aws
-  }
+  # providers = {
+  #   aws = aws
+  # }
   count = local.deploy_management_condition ? 1 : 0
   source = "../management"
 
