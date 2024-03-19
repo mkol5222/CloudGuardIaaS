@@ -67,31 +67,31 @@ module "autoscale_gwlb" {
 
 data "aws_region" "current"{}
 
-module "management" {
-  # providers = {
-  #   aws = aws
-  # }
-  //count = local.deploy_management_condition ? 1 : 0
-  source = "../management"
+# module "management" {
+#   # providers = {
+#   #   aws = aws
+#   # }
+#   //count = local.deploy_management_condition ? 1 : 0
+#   source = "../management"
 
-  vpc_id = var.vpc_id
-  subnet_id = var.subnet_ids[0]
-  management_name = var.management_server
-  management_instance_type = var.management_instance_type
-  key_name = var.key_name
-  allocate_and_associate_eip = true
-  volume_encryption = var.enable_volume_encryption ? "alias/aws/ebs" : ""
-  enable_instance_connect = var.enable_instance_connect
-  disable_instance_termination = var.disable_instance_termination
-  management_version = var.management_version
-  management_password_hash = var.management_password_hash
-  management_maintenance_mode_password_hash = var.management_maintenance_mode_password_hash
-  allow_upload_download = var.allow_upload_download
-  admin_cidr = var.admin_cidr
-  admin_shell = var.admin_shell
-  gateway_addresses = var.gateways_addresses
-  gateway_management = var.gateway_management
-  management_bootstrap_script = "echo -e '\nStarting Bootstrap script\n'; cv_json_path='/etc/cloud-version.json'\n cv_json_path_tmp='/etc/cloud-version-tmp.json'\n if test -f \"$cv_json_path\"; then cat \"$cv_json_path\" | jq '.template_name = \"'\"management_gwlb\"'\"' > \"$cv_json_path_tmp\"; mv \"$cv_json_path_tmp\" \"$cv_json_path\"; fi; autoprov_cfg -f init AWS -mn ${var.management_server} -tn ${var.configuration_template} -cn gwlb-controller -po ${var.gateways_policy} -otp ${var.gateway_SICKey} -r ${data.aws_region.current.name} -ver ${split("-", var.gateway_version)[0]} -iam; echo -e '\nFinished Bootstrap script\n'"
-  volume_type = var.volume_type
-  is_gwlb_iam = true
-}
+#   vpc_id = var.vpc_id
+#   subnet_id = var.subnet_ids[0]
+#   management_name = var.management_server
+#   management_instance_type = var.management_instance_type
+#   key_name = var.key_name
+#   allocate_and_associate_eip = true
+#   volume_encryption = var.enable_volume_encryption ? "alias/aws/ebs" : ""
+#   enable_instance_connect = var.enable_instance_connect
+#   disable_instance_termination = var.disable_instance_termination
+#   management_version = var.management_version
+#   management_password_hash = var.management_password_hash
+#   management_maintenance_mode_password_hash = var.management_maintenance_mode_password_hash
+#   allow_upload_download = var.allow_upload_download
+#   admin_cidr = var.admin_cidr
+#   admin_shell = var.admin_shell
+#   gateway_addresses = var.gateways_addresses
+#   gateway_management = var.gateway_management
+#   management_bootstrap_script = "echo -e '\nStarting Bootstrap script\n'; cv_json_path='/etc/cloud-version.json'\n cv_json_path_tmp='/etc/cloud-version-tmp.json'\n if test -f \"$cv_json_path\"; then cat \"$cv_json_path\" | jq '.template_name = \"'\"management_gwlb\"'\"' > \"$cv_json_path_tmp\"; mv \"$cv_json_path_tmp\" \"$cv_json_path\"; fi; autoprov_cfg -f init AWS -mn ${var.management_server} -tn ${var.configuration_template} -cn gwlb-controller -po ${var.gateways_policy} -otp ${var.gateway_SICKey} -r ${data.aws_region.current.name} -ver ${split("-", var.gateway_version)[0]} -iam; echo -e '\nFinished Bootstrap script\n'"
+#   volume_type = var.volume_type
+#   is_gwlb_iam = true
+# }
