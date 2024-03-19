@@ -172,16 +172,16 @@ resource "aws_instance" "management-instance" {
   })
 }
 
-module "cme_iam_role" {
-  source = "../cme-iam-role"
-  providers = {
-    aws = aws
-  }
-  count = local.new_instance_profile_general
+# module "cme_iam_role" {
+#   source = "../cme-iam-role"
+#   providers = {
+#     aws = aws
+#   }
+#   count = local.new_instance_profile_general
 
-  sts_roles = var.sts_roles
-  permissions = var.iam_permissions
-}
+#   sts_roles = var.sts_roles
+#   permissions = var.iam_permissions
+# }
 
 # module "cme_iam_role_gwlb" {
 #   source = "../cme-iam-role-gwlb"
