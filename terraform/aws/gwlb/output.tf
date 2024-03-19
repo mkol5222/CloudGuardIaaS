@@ -7,10 +7,10 @@ output "gwlb_arn" {
 output "gwlb_service_name" {
   value = "com.amazonaws.vpce.${data.aws_region.current.name}.${aws_vpc_endpoint_service.gwlb_endpoint_service.id}"
 }
-output "management_public_ip" {
-  depends_on = [module.management]
-  value = module.management[*].management_public_ip
-}
+# output "management_public_ip" {
+#   depends_on = [module.management]
+#   value = module.management[*].management_public_ip
+# }
 output "gwlb_name" {
   value = var.gateway_load_balancer_name
 }
